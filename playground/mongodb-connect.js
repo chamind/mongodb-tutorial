@@ -20,22 +20,22 @@ MongoClient.connect('Mongodb://localhost:27017/TodoApp', (err, db) => {
   //   console.log(JSON.stringify(result.ops, undefined, 2));
   // });
 
-  collection2.insertOne({
-
-    userName: 'Cham',
-    age: 28,
-    Height: '179cm',
-    weight: '70KG'
-
-  }, (err, result) => {
-
-    if (err) {
-     return  console.log('Error insert Document');
-    }
-
-    console.log(JSON.stringify(result.ops, undefined, 2));
-
-  });
+  // collection2.insertOne({
+  //
+  //   userName: 'Cham',
+  //   age: 28,
+  //   Height: '179cm',
+  //   weight: '70KG'
+  //
+  // }, (err, result) => {
+  //
+  //   if (err) {
+  //    return  console.log('Error insert Document');
+  //   }
+  //
+  //   console.log(JSON.stringify(result.ops, undefined, 2));
+  //
+  // });
 
   db.close();
 });
