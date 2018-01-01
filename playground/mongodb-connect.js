@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
 
 MongoClient.connect('Mongodb://localhost:27017/TodoApp', (err, db) => {
   if (err) {
@@ -6,36 +7,30 @@ MongoClient.connect('Mongodb://localhost:27017/TodoApp', (err, db) => {
   }
   console.log('Connecting database success!');
 
-  const collection1 = db.collection('Todos');
-  const collection2 = db.collection('Users');
+  insertDocuments(db, () => {
+    db.close();
 
-  // collection1.insertOne({
-  //   text: 'Something to do',
-  //   completed: false
-  // }, (err, result) => {
-  //   if (err) {
-  //     return console.log('Unable insert todo', err);
-  //   }
-  //
-  //   console.log(JSON.stringify(result.ops, undefined, 2));
-  // });
+  });
 
-  // collection2.insertOne({
-  //
-  //   userName: 'Cham',
-  //   age: 28,
-  //   Height: '179cm',
-  //   weight: '70KG'
-  //
-  // }, (err, result) => {
-  //
-  //   if (err) {
-  //    return  console.log('Error insert Document');
-  //   }
-  //
-  //   console.log(JSON.stringify(result.ops, undefined, 2));
-  //
-  // });
-
-  db.close();
 });
+
+const insertDocuments = (db, callback) => {
+  let collection = db.collection('Todos');
+
+  collection.insertMany([
+    {
+      a: 1
+    }, {
+      a: 2
+    }, {
+      a: 3
+    }
+  ], function(err, result) {
+    assert.equal(err, null);
+    assert.equal(3, result.result.n);
+    assert.equal(3, result.ops.length);
+    console.log("Inserted 3 documents into the collection");
+    callback(result);
+  });
+
+};
